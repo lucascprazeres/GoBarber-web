@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useState, useContext } from 'react';
 
 import api from '../services/api';
 
-interface SessionState {
+interface AuthState {
   token: string;
   user: object;
 }
@@ -20,7 +20,7 @@ interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-export function useAuth(): AuthContextData {
+function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
 
   if (!context) {
@@ -30,8 +30,8 @@ export function useAuth(): AuthContextData {
   return context;
 }
 
-export const AuthProvider: React.FC = ({ children }) => {
-  const [sessionData, setSessionData] = useState<SessionState>(() => {
+const AuthProvider: React.FC = ({ children }) => {
+  const [authData, setAuthData] = useState<AuthState>(() => {
     const token = localStorage.getItem('@GoBarber:token');
     const user = localStorage.getItem('@GoBarber:user');
 
@@ -39,7 +39,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       return { token, user: JSON.parse(user) };
     }
 
-    return {} as SessionState;
+    return {} as AuthState;
   });
 
   const signIn = useCallback(async ({ email, password }) => {
@@ -50,19 +50,21 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@GoBarber:token', token);
     localStorage.setItem('@GoBarber:user', JSON.stringify(user));
 
-    setSessionData({ token, user });
+    setAuthData({ token, user });
   }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@GoBarber:token');
     localStorage.removeItem('@GoBarber:user');
 
-    setSessionData({} as SessionState);
+    setAuthData({} as AuthState);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: sessionData.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: authData.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export { AuthProvider, useAuth };
