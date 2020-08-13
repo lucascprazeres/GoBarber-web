@@ -1,5 +1,5 @@
 <div align=center>
-  <img hieght="120" src=".github/logo.png"/>
+  <img src="./src/assets/logo.svg"/>
 
   <h3 align=center>💈 Um app React pra quem ama cortes de cabelo incríveis 💈</h3>
 </div>
