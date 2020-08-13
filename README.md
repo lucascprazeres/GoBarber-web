@@ -1,5 +1,5 @@
 <div align=center>
-  <img src="./src/assets/logo.svg"/>
+  <img hieght="120" src=".github/logo.png"/>
 
   <h3 align=center>💈 Um app React pra quem ama cortes de cabelo incríveis 💈</h3>
 </div>
@@ -38,7 +38,7 @@
   <li>react-spring</li>
   <li>styled-components</li>
   <li>react-day-picker</li>
-  <li>date-nfs</li>
+  <li>date-fns</li>
 </ul>
 
 
